@@ -1,9 +1,9 @@
 import { CircleSmall } from "lucide-react";
 
-const Navbar = () => {
+const TopNavBar = () => {
   return (
-    <nav className="mx-auto flex w-full max-w-7xl items-center justify-between p-4">
-      <div className="flex items-center">
+    <nav className="m-4 flex items-center justify-between border-b-2 border-gray-400">
+      <div>
         <div className="flex">
           <CircleSmall />
           <CircleSmall />
@@ -11,8 +11,9 @@ const Navbar = () => {
         </div>
         <span className="text-2xl">Ponder</span>
       </div>
+      <input type="search" className="w-[200px] rounded-lg border-2"></input>
     </nav>
   );
 };
 
-export default Navbar;
+export default TopNavBar;
