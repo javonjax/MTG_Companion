@@ -1,4 +1,4 @@
-const Homepage = () => {
+const Homepage = (): React.JSX.Element => {
   return (
     <div className="flex h-full w-full items-center justify-center">
       <h1>Welcome to Ponder.</h1>
