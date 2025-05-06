@@ -30,6 +30,8 @@ router.get('/cards/random', async (req: Request, res: Response) => {
 
 /*
   GET cards using a text search string.
+  The Scryfall API supports querying using their fulltext search system.
+  https://scryfall.com/docs/syntax
 */
 router.get('/cards/search', async (req: Request, res: Response) => {
   try {
