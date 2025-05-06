@@ -1,6 +1,6 @@
 import express, { Request, Response, Router } from 'express';
 import dotenv from 'dotenv';
-import { convertQueryToURLSearchParams } from '../utils';
+import { convertQueryToURLSearchParams } from '../../utils';
 dotenv.config();
 
 /*
@@ -43,23 +43,6 @@ router.get('/cards/search', async (req: Request, res: Response) => {
     const apiResponse: globalThis.Response = await fetch(
       `${SCRYFALL_CARDS_SEARCH_URL}?${queryParams}`
     );
-    const responseData: unknown = await apiResponse.json();
-    res.send(responseData);
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-/*
-  GET a list of all avaiable sets of Magic cards.
-*/
-router.get('/cards/sets', async (req: Request, res: Response) => {
-  try {
-    if (typeof SCRYFALL_SETS_URL !== 'string') {
-      throw new TypeError('API url not set.');
-    }
-
-    const apiResponse: globalThis.Response = await fetch(`${SCRYFALL_SETS_URL}`);
     const responseData: unknown = await apiResponse.json();
     res.send(responseData);
   } catch (error) {
