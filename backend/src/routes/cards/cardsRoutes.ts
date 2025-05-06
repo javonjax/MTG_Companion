@@ -21,8 +21,8 @@ router.get('/cards/random', async (req: Request, res: Response) => {
       throw new TypeError('Random API url not set.');
     }
     const apiResponse: globalThis.Response = await fetch(`${SCRYFALL_CARDS_RANDOM_URL}`);
-    const responseData: unknown = await apiResponse.json();
-    res.send(responseData);
+    const data: unknown = await apiResponse.json();
+    res.send(data);
   } catch (error) {
     console.log(error);
   }
@@ -38,13 +38,12 @@ router.get('/cards/search', async (req: Request, res: Response) => {
     if (typeof SCRYFALL_CARDS_SEARCH_URL !== 'string') {
       throw new TypeError('Search API url not set.');
     }
-
     const queryParams: string = convertQueryToURLSearchParams(req).toString();
     const apiResponse: globalThis.Response = await fetch(
       `${SCRYFALL_CARDS_SEARCH_URL}?${queryParams}`
     );
-    const responseData: unknown = await apiResponse.json();
-    res.send(responseData);
+    const data: unknown = await apiResponse.json();
+    res.send(data);
   } catch (error) {
     console.log(error);
   }

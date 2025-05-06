@@ -25,16 +25,15 @@ router.get('/sets', async (req: Request, res: Response) => {
     if (typeof SCRYFALL_SETS_URL !== 'string') {
       throw new TypeError('API url not set.');
     }
-
     const apiResponse: globalThis.Response = await fetch(`${SCRYFALL_SETS_URL}`);
-    const responseData: unknown = await apiResponse.json();
-    const parsedApiResponse = SetsAPIResponseSchema.safeParse(responseData);
+    const data: unknown = await apiResponse.json();
+    const parsedApiResponse = SetsAPIResponseSchema.safeParse(data);
     if (!parsedApiResponse.success) {
       throw new TypeError('Response data does not fit the desired schema.');
     }
-    const result: SetsAPIResponse = parsedApiResponse.data;
-    const sets: CardSetList = result.data;
-    res.json({ sets: sets });
+    const parsedData: SetsAPIResponse = parsedApiResponse.data;
+    const sets: CardSetList = parsedData.data;
+    res.json({ sets });
   } catch (error) {
     console.log(error);
   }
@@ -50,13 +49,13 @@ router.get('/sets/:code', async (req: Request, res: Response) => {
     }
     const setCode: string = req.params.code;
     const apiResponse: globalThis.Response = await fetch(`${SCRYFALL_SETS_URL}/${setCode}`);
-    const responseData: unknown = await apiResponse.json();
-    const parsedApiResponse = CardSetSchema.safeParse(responseData);
+    const data: unknown = await apiResponse.json();
+    const parsedApiResponse = CardSetSchema.safeParse(data);
     if (!parsedApiResponse.success) {
       throw new TypeError('Response data does not fit the desired schema.');
     }
-    const result: CardSet = parsedApiResponse.data;
-    res.json(result);
+    const set: CardSet = parsedApiResponse.data;
+    res.json({ set });
   } catch (error) {
     console.log(error);
   }
