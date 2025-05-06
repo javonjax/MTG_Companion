@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
-import cardRoutes from './cards/cardsRoutes';
+import cardRoutes from './routes/cards/cardsRoutes.ts';
+import setsRoutes from './routes/sets/setsRoutes.ts';
 
 const app = express();
 const port = 3000;
@@ -11,6 +12,7 @@ app.use(cors());
 
 // Routes
 app.use(cardRoutes);
+app.use(setsRoutes);
 app.get('/', (req: Request, res: Response) => {
   res.send('MTG App.');
 });
