@@ -1,6 +1,12 @@
 import express, { Request, Response, Router } from 'express';
 import dotenv from 'dotenv';
 import { convertQueryToURLSearchParams } from '../../utils';
+import {
+  CardsAPIResponse,
+  CardsAPIResponseSchema,
+  Card,
+  CardSchema,
+} from '../../../../schemas/schemas';
 dotenv.config();
 
 /*
@@ -20,9 +26,18 @@ router.get('/cards/random', async (req: Request, res: Response) => {
     if (typeof SCRYFALL_CARDS_RANDOM_URL !== 'string') {
       throw new TypeError('Random API url not set.');
     }
-    const apiResponse: globalThis.Response = await fetch(`${SCRYFALL_CARDS_RANDOM_URL}`);
+    const apiResponse: globalThis.Response = await fetch(
+      `${SCRYFALL_CARDS_RANDOM_URL}?q=usd>=0.01`
+    );
     const data: unknown = await apiResponse.json();
-    res.send(data);
+    const parsedApiResponse = CardSchema.safeParse(data);
+    if (!parsedApiResponse.success) {
+      console.log(parsedApiResponse.error.message);
+      throw new TypeError('Response data does not fit the desired schema.');
+    }
+    const card: Card = parsedApiResponse.data;
+
+    res.json(card);
   } catch (error) {
     console.log(error);
   }
@@ -43,7 +58,13 @@ router.get('/cards/search', async (req: Request, res: Response) => {
       `${SCRYFALL_CARDS_SEARCH_URL}?${queryParams}`
     );
     const data: unknown = await apiResponse.json();
-    res.send(data);
+    const parsedApiResponse = CardsAPIResponseSchema.safeParse(data);
+    if (!parsedApiResponse.success) {
+      console.log(parsedApiResponse.error.issues);
+      throw new TypeError('Response data does not fit the desired schema.');
+    }
+    const parsedData: CardsAPIResponse = parsedApiResponse.data;
+    res.json(parsedData);
   } catch (error) {
     console.log(error);
   }

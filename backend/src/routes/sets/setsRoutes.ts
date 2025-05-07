@@ -5,7 +5,6 @@ import {
   SetsAPIResponse,
   CardSetSchema,
   SetsAPIResponseSchema,
-  CardSetList,
   CardSet,
 } from '../../../../schemas/schemas.ts'; // TODO: update aliases.
 dotenv.config();
@@ -32,8 +31,7 @@ router.get('/sets', async (req: Request, res: Response) => {
       throw new TypeError('Response data does not fit the desired schema.');
     }
     const parsedData: SetsAPIResponse = parsedApiResponse.data;
-    const sets: CardSetList = parsedData.data;
-    res.json({ sets });
+    res.json(parsedData);
   } catch (error) {
     console.log(error);
   }
@@ -55,7 +53,7 @@ router.get('/sets/:code', async (req: Request, res: Response) => {
       throw new TypeError('Response data does not fit the desired schema.');
     }
     const set: CardSet = parsedApiResponse.data;
-    res.json({ set });
+    res.json(set);
   } catch (error) {
     console.log(error);
   }
