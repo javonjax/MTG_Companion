@@ -19,7 +19,7 @@ export const CardSetSchema = z.object({
   name: z.string(),
   card_count: z.number(),
   set_type: z.string(),
-  released_at: z.string(),
+  released_at: z.string().optional(),
   digital: z.boolean(),
   parent_set_code: z.string().optional(),
   icon_svg_uri: z.string(),
