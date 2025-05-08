@@ -35,7 +35,7 @@ export const SetsAPIResponseSchema = z.object({
 export type SetsAPIResponse = z.infer<typeof SetsAPIResponseSchema>;
 
 /*
-  Card.
+  Card (individual).
 */
 export const CardFaceSchema = z.object({
   cmc: z.number().optional(),
@@ -128,3 +128,24 @@ export const CardsAPIResponseSchema = z.object({
 });
 
 export type CardsAPIResponse = z.infer<typeof CardsAPIResponseSchema>;
+
+/*
+  Symbology.
+*/
+export const SymbologySchema = z.object({
+  symbol: z.string(),
+  english: z.string(),
+  mana_value: z.number().optional().nullable(),
+  colors: z.array(z.string()),
+  represents_mana: z.boolean(),
+  hybrid: z.boolean(),
+  phyrexian: z.boolean(),
+  scg_uri: z.string().optional(),
+});
+
+export const SymbologyAPIResponseSchema = z.object({
+  has_more: z.boolean(),
+  data: z.array(SymbologySchema),
+});
+
+export type SymbologyAPIResponse = z.infer<typeof SymbologyAPIResponseSchema>;

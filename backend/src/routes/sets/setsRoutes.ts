@@ -30,8 +30,8 @@ router.get('/sets', async (req: Request, res: Response) => {
     if (!parsedApiResponse.success) {
       throw new TypeError('Response data does not fit the desired schema.');
     }
-    const parsedData: SetsAPIResponse = parsedApiResponse.data;
-    res.json(parsedData);
+    const setsData: SetsAPIResponse = parsedApiResponse.data;
+    res.json(setsData);
   } catch (error) {
     console.log(error);
   }

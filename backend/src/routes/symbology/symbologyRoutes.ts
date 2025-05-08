@@ -1,6 +1,7 @@
 import express, { Request, Response, Router } from 'express';
 import dotenv from 'dotenv';
 import { convertQueryToURLSearchParams } from '../../utils';
+import { SymbologyAPIResponse, SymbologyAPIResponseSchema } from '../../../../schemas/schemas';
 dotenv.config();
 
 /*
@@ -19,9 +20,14 @@ router.get('/symbology', async (req: Request, res: Response) => {
       throw new TypeError('Symbology API url not set.');
     }
     const apiResponse: globalThis.Response = await fetch(`${SCRYFALL_SYMBOLOGY_URL}`);
-    console.log(apiResponse);
     const data: unknown = await apiResponse.json();
-    res.json(data);
+    const parsedApiResponse = SymbologyAPIResponseSchema.safeParse(data);
+    if (!parsedApiResponse.success) {
+      console.log(parsedApiResponse.error.issues);
+      throw new TypeError('Response data does not fit the desired schema.');
+    }
+    const symbologyData: SymbologyAPIResponse = parsedApiResponse.data;
+    res.json(symbologyData);
   } catch (error) {
     console.log(error);
   }
