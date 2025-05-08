@@ -1,8 +1,7 @@
-const Homepage = () => {
+const Homepage = (): React.JSX.Element => {
   return (
-    <div>
-      Welcome to Ponder
-      <div>Your Magic: The Gathering Companion</div>
+    <div className="flex h-full w-full items-center justify-center">
+      <h1>Welcome to Ponder.</h1>
     </div>
   );
 };
